@@ -16,11 +16,7 @@ jobs:
     - name: Set up Azure CLI
       uses: azure/login@v1
       with:
-        creds: {"clientSecret": "FkH8Q~tnKcV6oPx-09q3JLJ7YCqyPqfNpq3J1bwz",
-                  "subscriptionId": "821c1871-a810-455b-8935-d3a2522aaf4a",
-                "tenantId": "5bc08d06-98fa-4c98-87dd-ef8182447ce0",
-                "clientId": "ec990bd7-d302-430b-b534-3d65638ea47f"
-                }
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: Upload files to Azure Storage
       run: |
