@@ -79,7 +79,6 @@ function searchProduct() {
 // Get access token from localStorage
 const accessTokenSaved  = localStorage.getItem('access_token'); 
 if(!accessTokenSaved) {
-
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     // Call Azure Function to exchange code for access token
