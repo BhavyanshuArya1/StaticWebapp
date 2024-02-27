@@ -20,4 +20,4 @@ jobs:
     
     - name: Upload files to Azure Storage
       run: |
-        az storage blob upload-batch --destination "$web" --account-name bhavyanshu --account-key "yKiHkv2dKwm2v68aTKxvK33CXhYRpuKRzFdFSSk6IbgqrhsuhgnGE5OeNNyGDVte/CMJmYHwvEjf+AStiVRetQ==" --c "$web"--source . --pattern "*.*"
+        az storage blob upload-batch --destination "$web" --account-name bhavyanshu --account-key "yKiHkv2dKwm2v68aTKxvK33CXhYRpuKRzFdFSSk6IbgqrhsuhgnGE5OeNNyGDVte/CMJmYHwvEjf+AStiVRetQ==" --source . --pattern "*.*"
