@@ -76,7 +76,7 @@
 
 
 function searchProduct() {    
-    
+
 // Get access token from localStorage
 const accessTokenSaved  = localStorage.getItem('access_token'); 
 if(!accessTokenSaved) {    
@@ -166,12 +166,13 @@ function fetchData() {
         // Display data in a table
         const dataTable = document.getElementById('data-table');
         // Clear previous content
-        dataTable.innerHTML = '';
+       // dataTable.innerHTML = '';
         // Assuming data is an array of objects with properties to display
         data.forEach(item => {
         const row = dataTable.insertRow();
         row.insertCell(0).textContent = item.id;
         row.insertCell(1).textContent = item.name;
+        row.insertCell(1).textContent = item.price;
         // Add more cells for additional properties
         });
     })
