@@ -54,7 +54,7 @@
     <h1>Welcome</h1>
 
     <form action="/search" method="GET">
-        <input type="text" name="query" placeholder="Enter product name">
+        <input type="text"  id="productName" name="query" placeholder="Enter product name">
         <button onclick="searchProduct()">Search</button>
     </form>
 
@@ -77,6 +77,12 @@
 
 function searchProduct() {    
 
+// Get the input element by its id
+var input = document.getElementById('productName');
+    
+// Get the value entered by the user
+var productName = input.value;
+
 // Get access token from localStorage
 const accessTokenSaved  = localStorage.getItem('access_token'); 
 if(!accessTokenSaved) {    
@@ -92,13 +98,13 @@ if(!accessTokenSaved) {
             })
             .then (() => {
                 // Fetch function 2 after function 1 completes
-                return fetchData();
+                return fetchData('http://4.157.0.172/search-product/'+productName);
             })
             .catch(error => console.error(error));
 
         }
  else {
-    fetchData();
+    fetchData('http://4.157.0.172/search-product/'+productName);
  }       
 
 }
@@ -125,18 +131,18 @@ function getData() {
                 })
                 .then (() => {
                     // Fetch function 2 after function 1 completes
-                    return fetchData();
+                    return fetchData('http://4.157.0.172');
                 })
                 .catch(error => console.error(error));
 
             }
      else {
-        fetchData();
+        fetchData('http://4.157.0.172');
      }       
 
 }
 
-function fetchData() {
+function fetchData(serviceUrl) {
 
     // Get access token from localStorage
     const accessToken = localStorage.getItem('access_token'); // Assuming you've stored the access token in localStorage
@@ -153,7 +159,7 @@ function fetchData() {
 
     // Make API call to Azure Kubernetes Service with the access token in the header
     // Make API call to Azure Kubernetes Service with the access token in the header
-    fetch('http://4.157.0.172', {
+    fetch(serviceUrl, {
         headers: headers
     })
     .then(response => {
