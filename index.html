@@ -53,10 +53,10 @@
 <body>
     <h1>Welcome</h1>
 
-    <form action="/search" method="GET">
+  
         <input type="text"  id="productName" name="query" placeholder="Enter product name">
         <button onclick="searchProduct()">Search</button>
-    </form>
+   
 
     <button onclick="getData()">Get Data</button>
     <button onclick="logout()">Logout</button>
@@ -89,7 +89,7 @@ if(!accessTokenSaved) {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     // Call Azure Function to exchange code for access token
-        fetch('https://converttotoken.azurewebsites.net/api/HttpTrigger1?code=XEB0J6TckAAV88B9ybY_nvD6zxbY3--vSy3YqZTupSefAzFulfoMXg==&authCode=' + code)
+        fetch('https://converttousertoken.azurewebsites.net/api/HttpTrigger1?code=59h48ROURP2Nrlc-4Ms8vYt9OVqMOCM1ZDTvDd0CG1RcAzFu3hrIYw==&authCode=' + code)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -98,13 +98,13 @@ if(!accessTokenSaved) {
             })
             .then (() => {
                 // Fetch function 2 after function 1 completes
-                return fetchData('http://4.157.0.172/search-product/'+productName);
+                return searchData(productName);
             })
             .catch(error => console.error(error));
 
         }
  else {
-    fetchData('http://4.157.0.172/search-product/'+productName);
+    searchData(productName);
  }       
 
 }
@@ -113,16 +113,14 @@ if(!accessTokenSaved) {
 
 function getData() {
 
-    
     // Get access token from localStorage
     const accessTokenSaved  = localStorage.getItem('access_token'); 
     if(!accessTokenSaved) {
-
     
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         // Call Azure Function to exchange code for access token
-            fetch('https://converttotoken.azurewebsites.net/api/HttpTrigger1?code=XEB0J6TckAAV88B9ybY_nvD6zxbY3--vSy3YqZTupSefAzFulfoMXg==&authCode=' + code)
+            fetch('https://converttousertoken.azurewebsites.net/api/HttpTrigger1?code=59h48ROURP2Nrlc-4Ms8vYt9OVqMOCM1ZDTvDd0CG1RcAzFu3hrIYw==&authCode=' + code)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
@@ -131,18 +129,18 @@ function getData() {
                 })
                 .then (() => {
                     // Fetch function 2 after function 1 completes
-                    return fetchData('http://4.157.0.172');
+                    return fetchData();
                 })
                 .catch(error => console.error(error));
 
             }
      else {
-        fetchData('http://4.157.0.172');
+        fetchData();
      }       
 
 }
 
-function fetchData(serviceUrl) {
+function fetchData() {
 
     // Get access token from localStorage
     const accessToken = localStorage.getItem('access_token'); // Assuming you've stored the access token in localStorage
@@ -159,7 +157,7 @@ function fetchData(serviceUrl) {
 
     // Make API call to Azure Kubernetes Service with the access token in the header
     // Make API call to Azure Kubernetes Service with the access token in the header
-    fetch(serviceUrl, {
+    fetch("http://20.235.205.205", {
         headers: headers
     })
     .then(response => {
@@ -178,7 +176,7 @@ function fetchData(serviceUrl) {
         const row = dataTable.insertRow();
         row.insertCell(0).textContent = item.id;
         row.insertCell(1).textContent = item.name;
-        row.insertCell(1).textContent = item.price;
+        row.insertCell(2).textContent = item.Price;
         // Add more cells for additional properties
         });
     })
@@ -186,9 +184,55 @@ function fetchData(serviceUrl) {
 
 
 }
+
+function searchData(productName) {
+
+// Get access token from localStorage
+const accessToken = localStorage.getItem('access_token'); // Assuming you've stored the access token in localStorage
+
+// Make sure access token is available
+if (!accessToken) {
+    console.error('Access token not found');
+    return;
+}
+
+// Construct headers with Authorization header containing the access token
+const headers = new Headers();
+headers.append('user-token', `${accessToken}`);
+
+// Make API call to Azure Kubernetes Service with the access token in the header
+// Make API call to Azure Kubernetes Service with the access token in the header
+fetch('http://20.235.205.205/search-product/'+productName, {
+    headers: headers
+})
+.then(response => {
+    if (!response.ok) {
+    throw new Error('Network response was not ok');
+}
+    return response.json();
+})
+.then(data => {
+    // Display data in a table
+    const dataTable = document.getElementById('data-table');
+    // Clear previous content
+   // dataTable.innerHTML = '';
+    // Assuming data is an array of objects with properties to display
+    data.products.forEach(item => {
+    const row = dataTable.insertRow();
+    row.insertCell(0).textContent = item.id;
+    row.insertCell(1).textContent = item.name;
+    row.insertCell(2).textContent = item.Price;
+    // Add more cells for additional properties
+    });
+})
+.catch(error => console.error('Error fetching data:', error));
+
+
+}
         
 
         function logout() {
+            localStorage.clear();
             // Redirect to logout URL
             window.location.href = 'LOGOUT_URL';
         }
