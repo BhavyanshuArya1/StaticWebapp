@@ -13,16 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       
-    - name: Upload files to Azure Storage
-      uses: azure/azure-cli@v1
+    - name: Set up Azure CLI
+      uses: azure/login@v1
       with:
-        azcliversion: 2.0.72
-        inlineScript: |
-           az storage blob upload --account-name staticwebsitenagp --connection-string "DefaultEndpointsProtocol=https;AccountName=staticwebsitenagp;AccountKey=eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==;EndpointSuffix=core.windows.net" --container-name "\$web" --file index.html --name index.html --overwrite
-           az storage blob upload --account-name staticwebsitenagp --connection-string "DefaultEndpointsProtocol=https;AccountName=staticwebsitenagp;AccountKey=eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==;EndpointSuffix=core.windows.net" --container-name "\$web" --file login.html --name login.html --overwrite
-        
-   
-       
-
-      
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
+    - name: Upload files to Azure Storage
+      run: |
+        az storage blob upload --account-name staticwebsitenagp --connection-string "DefaultEndpointsProtocol=https;AccountName=staticwebsitenagp;AccountKey=eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==;EndpointSuffix=core.windows.net" --container-name "\$web" --file index.html --name index.html --overwrite
+        az storage blob upload --account-name staticwebsitenagp --connection-string "DefaultEndpointsProtocol=https;AccountName=staticwebsitenagp;AccountKey=eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==;EndpointSuffix=core.windows.net" --container-name "\$web" --file login.html --name login.html --overwrite
+        
