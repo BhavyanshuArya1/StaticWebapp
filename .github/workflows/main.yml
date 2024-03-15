@@ -20,6 +20,6 @@ jobs:
     
     - name: Upload files to Azure Storage
       run: |
-        az storage blob upload --account-name bhavyanshu --account-key "yKiHkv2dKwm2v68aTKxvK33CXhYRpuKRzFdFSSk6IbgqrhsuhgnGE5OeNNyGDVte/CMJmYHwvEjf+AStiVRetQ==" --container-name "\$web" --file index.html --name index.html --overwrite
-        az storage blob upload --account-name bhavyanshu --account-key "yKiHkv2dKwm2v68aTKxvK33CXhYRpuKRzFdFSSk6IbgqrhsuhgnGE5OeNNyGDVte/CMJmYHwvEjf+AStiVRetQ==" --container-name "\$web" --file login.html --name login.html --overwrite
+        az storage blob upload --account-name staticwebsitenagp --account-key "eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==" --container-name "\$web" --file index.html --name index.html --overwrite
+        az storage blob upload --account-name staticwebsitenagp --account-key "eFDyBNElaMgtSmL4zPcmGqmPDQd1I5AkmjgSPJEvZqsF2hQqV8JPcS2kHGqYEce89/cazfJd3AuE+AStdPCY8Q==" --container-name "\$web" --file login.html --name login.html --overwrite
         
